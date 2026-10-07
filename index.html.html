@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lịch đi làm</title>
+<style>
+:root{--bg:#fafaf7;--card:#fff;--tx:#1f1e1d;--tx2:#6b6a66;--bd:#e3e1da;--ac:#185FA5;--onac:#fff;--ok:#27500A;--wn:#854F0B;--er:#A32D2D;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1e1d;--card:#2b2a28;--tx:#f1efe8;--tx2:#a8a69e;--bd:#44423e;--ac:#85B7EB;--onac:#042C53;--ok:#97C459;--wn:#EF9F27;--er:#F09595}}
+:root[data-theme="dark"]{--bg:#1f1e1d;--card:#2b2a28;--tx:#f1efe8;--tx2:#a8a69e;--bd:#44423e;--ac:#85B7EB;--onac:#042C53;--ok:#97C459;--wn:#EF9F27;--er:#F09595}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:480px;margin:0 auto;padding:16px}
+h1{font-size:20px;font-weight:500;margin:0}
+h2{font-size:16px;font-weight:500;margin:0 0 8px}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0}
+.nav b{font-weight:500;text-align:center;font-size:15px}
+button{font:inherit;color:var(--tx);background:transparent;border:1px solid var(--bd);border-radius:8px;padding:8px 14px;cursor:pointer;touch-action:manipulation}
+button.pri{background:var(--ac);color:var(--onac);border-color:var(--ac);font-weight:600}
+button.dg{color:var(--er)}
+input[type=number]{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px;width:100%}
+.lg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--tx2);margin-bottom:8px}
+.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.tb{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:13px;color:var(--tx2)}
+.tb button{padding:6px 12px;font-size:13px}
+.tb button.on{border-color:var(--ac);color:var(--ac)}
+#g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.h{text-align:center;font-size:15px;font-weight:700;color:var(--tx);padding:4px 0}
+.h.cn{color:#A32D2D}
+.c{border-radius:8px;padding:4px 2px;cursor:pointer;display:flex;flex-direction:column;gap:3px;background:var(--card);border:1px solid var(--bd);color:var(--tx);min-height:62px}
+.c.on{outline:2px solid var(--ac)}
+.d{font-size:16px;font-weight:800;text-align:center;line-height:1.15}
+.sl{font-size:12px;text-align:center;font-weight:800;line-height:1.15}
+.b{border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 0;line-height:1.15}
+.b b{font-size:13px;font-weight:800}
+.b span{font-size:10px}
+.m{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 6px}
+.m div{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 10px}
+.m small{display:block;font-size:12px;color:var(--tx2)}
+.m b{font-size:20px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;font-size:14px;margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{color:#2C2C2A;border:1px solid transparent;padding:6px 12px;font-size:13px}
+.chip.on{outline:2px solid var(--ac)}
+.r{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+label{font-size:13px;color:var(--tx2)}
+.ck{display:flex;align-items:center;gap:8px;color:var(--tx);font-size:14px;margin-top:6px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--bd);font-size:14px}
+.row:first-of-type{border-top:none}
+.tot{font-size:20px;font-weight:500;color:var(--ok)}
+.note{font-size:12px;color:var(--tx2);margin-top:6px}
+.imp{font-size:16px;font-weight:800}
+.savebtn{font-size:16px;font-weight:800;padding:10px 18px}
+#st{font-weight:600}
+.ln{margin:2px 0;font-size:14px}
+.st{display:inline-block;font-size:12px;padding:2px 8px;border-radius:6px;margin-left:6px}
+.st.ok{background:#EAF3DE;color:#27500A}
+.st.no{background:#FAEEDA;color:#633806}
+.stp{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stp div{display:flex;align-items:center;gap:12px}
+.stp b{font-size:20px;font-weight:500;min-width:24px;text-align:center}
+.stp button{padding:6px 14px;font-size:18px}
+#hint{font-size:13px;margin:4px 0 0}
+#err{font-size:13px;color:var(--er);margin-top:8px}
+#st{font-size:12px;color:var(--tx2);margin-top:12px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<h1>Lịch đi làm</h1>
+<div class="nav"><button id="pv" aria-label="Tháng trước">&larr;</button><b id="tt"></b><button id="nx" aria-label="Tháng sau">&rarr;</button></div>
+<div class="lg" id="lg"></div>
+<div class="tb"><span id="tbn">Ngày chưa nhập tính là Hành chính</span><button id="mb">Chọn nhiều ngày</button></div>
+<div id="g"></div>
+<div class="card" id="ed"></div>
+<div class="m" id="sm"></div>
+<div id="hint"></div>
+<div class="card" id="r4c"></div>
+<div class="card" id="pay"></div>
+<div id="st">Đang kết nối…</div>
+</main>
+<script>
+var MONTHLY=6045000,STD=26,DAY=MONTHLY/STD,HOUR=DAY/8;
+var C1P=['#D6EBC4','#FBE9B0','#E6EFB0'];
+var SH={
+hc:{n:'HC',f:'Hành chính',t:'8h00 – 17h00',col:'#E0D8F6'},
+c1:{n:'Ca 1',f:'Ca 1',t:'6h00 – 14h00',col:'#D6EBC4'},
+c2:{n:'Ca 2',f:'Ca 2',t:'14h00 – 20h00',col:'#FAD9B8'},
+dem:{n:'Đêm',f:'Ca đêm',t:'20h00 – 6h00, tăng ca thêm 2 giờ đến 8h00',col:'#C3CBDB'},
+r4:{n:'R4',f:'Nghỉ R4',t:'Ngày nghỉ trong tuần',col:'#D3EEE8'},
+nghi:{n:'Nghỉ',f:'Nghỉ',t:'Ngày nghỉ khác',col:'#E4E2DA'}
+};
+var ORD=['hc','c1','c2','dem','r4','nghi'];
+var WD=['Chủ nhật','Thứ hai','Thứ ba','Thứ tư','Thứ năm','Thứ sáu','Thứ bảy'];
+var HD=['T2','T3','T4','T5','T6','T7','CN'];
+var rnd=function(){return C1P[Math.floor(Math.random()*C1P.length)];};
+var pad=function(n){return n<10?'0'+n:''+n;};
+var kf=function(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());};
+var fm=function(x){return Math.round(x).toLocaleString('vi-VN')+' đ';};
+var n1=function(x){return (Math.round(x*100)/100).toLocaleString('vi-VN');};
+var $=function(x){return document.getElementById(x);};
+var shOf=function(r){return r.sh||'hc';};
+var ext=function(r){return shOf(r)==='dem'&&r.x!==false?2:0;};
+var now=new Date(),cy=now.getFullYear(),cm=now.getMonth();
+if(now.getDate()<21){cm--;if(cm<0){cm=11;cy--;}}
+var days=[],data={},r4t=null,sel=null,editing=false,draft={},db=null,multi=false,ms={},mshift=null,msg='',tok=0,dirty=false,wchain=Promise.resolve(),saveSeq=0,lastSaveTs=0;
+
+function build(){
+days=[];
+var s=new Date(cy,cm,21),e=new Date(cy,cm+1,20);
+for(var d=new Date(s);d<=e;d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1))days.push({k:kf(d),d:d});
+sel=days[0].k;ms={};
+$('tt').textContent='21/'+(cm+1)+'/'+cy+' – 20/'+(e.getMonth()+1)+'/'+e.getFullYear();
+}
+function key(){return 'cycles/'+days[0].k;}
+function weekRows(){var first=(days[0].d.getDay()+6)%7;return Math.ceil((first+days.length)/7);}
+function target(){return r4t!=null?r4t:weekRows();}
+function dayObj(k){return days.filter(function(x){return x.k===k;})[0];}
+function rec(k){if(!multi&&editing&&k===sel)return draft;return data[k]||{};}
+function setSt(t){$('st').textContent=t;}
+
+function norm(){
+Object.keys(data).forEach(function(k){
+var r=data[k];
+if(!r||typeof r!=='object'){delete data[k];return;}
+if(r.c&&!r.sh)r.sh='c1';
+delete r.c;
+if(!r.sh)r.sh='hc';
+if(r.sh==='c1'&&C1P.indexOf(r.col)<0)r.col=rnd();
+});
+}
+function lsKey(){return 'lich:'+days[0].k;}
+function localLoad(){try{return JSON.parse(localStorage.getItem(lsKey())||'null');}catch(e){return null;}}
+function localSave(p){try{localStorage.setItem(lsKey(),JSON.stringify(p));}catch(e){}}
+function apply(v){data=(v&&v.days)||{};r4t=(v&&v.r4t!=null)?v.r4t:null;norm();}
+function getDb(){
+if(db)return Promise.resolve(db);
+if(!(window.claude&&claude.use))return Promise.resolve(null);
+return claude.use('db').then(function(x){db=x;return x;}).catch(function(){return null;});
+}
+function persist(){
+  dirty=true;
+  var ts=Date.now();
+  lastSaveTs=ts;
+  saveSeq++;
+  var mySave=saveSeq;
+  var p=JSON.parse(JSON.stringify({days:data,r4t:r4t,ts:ts}));
+  localSave(p);
+  var k=key();
+  setSt('Đã lưu trên máy này • đang đồng bộ…');
+  return getDb().then(function(d){
+    if(!d){
+      if(mySave===saveSeq)setSt('Đã lưu trên máy này');
+      return;
+    }
+    wchain=wchain.then(function(){return d.doc(k).set(p);})
+      .then(function(){if(mySave===saveSeq)setSt('Đã lưu và đồng bộ');})
+      .catch(function(e){if(mySave===saveSeq)setSt('Đã lưu trên máy này • chưa đồng bộ được ('+((e&&e.code)||'lỗi')+')');});
+    return wchain;
+  });
+}
+
+function ob(v,bg,fg,l){return v>0?'<div class="b" style="background:'+bg+';color:'+fg+'"><b>'+n1(v)+'h</b><span>'+l+'</span></div>':'';}
+function draw(){
+var h='';
+HD.forEach(function(x){h+='<div class="h'+(x==='CN'?' cn':'')+'">'+x+'</div>';});
+var first=(days[0].d.getDay()+6)%7;
+for(var i=0;i<first;i++)h+='<div></div>';
+days.forEach(function(o){
+var r=rec(o.k),s=shOf(r),dn=o.d.getDate();
+var lab=(dn===1||o.k===days[0].k)?dn+'/'+(o.d.getMonth()+1):dn;
+var col=s==='c1'?(r.col||SH.c1.col):SH[s].col;
+var st='background:'+col+';color:#2C2C2A;border-color:transparent;';
+if(s==='r4')st+='border:1px dashed #0F6E56;';
+var tx=SH[s].n;
+if(s==='r4'&&r.w)tx='R4 x2';
+if(s==='nghi'&&r.p)tx='Phép';
+var on=multi?ms[o.k]:o.k===sel;
+h+='<div class="c'+(on?' on':'')+'" data-k="'+o.k+'" role="button" tabindex="0" style="'+st+'"><div class="d">'+lab+'</div><div class="sl">'+tx+'</div>'+ob((r.s||0)+ext(r),'#CFE6FA','#0C447C','sáng')+ob(r.t||0,'#F9D6E4','#72243E','tối')+'</div>';
+});
+$('g').innerHTML=h;
+}
+function calc(){
+var cnt={hc:0,c1:0,c2:0,dem:0,r4:0,nghi:0},rw=0,pl=0,sH=0,tH=0,base=0,night=0,rest=0,leave=0,cong=0;
+days.forEach(function(o){
+var r=data[o.k]||{},s=shOf(r);
+cnt[s]++;
+if(s==='hc'||s==='c1'||s==='c2'||s==='dem'){base+=DAY;cong+=1;}
+if(s==='dem')night+=DAY*0.3;
+if(s==='r4'&&r.w){rw++;rest+=DAY*2;cong+=2;}
+if(s==='nghi'&&r.p){pl++;leave+=DAY;cong+=1;}
+sH+=(r.s||0)+ext(r);tH+=r.t||0;
+});
+var otH=sH+tH,otCong=otH*1.5/8,ot=otH*1.5*HOUR,total=base+night+rest+leave+ot;
+var work=cnt.hc+cnt.c1+cnt.c2+cnt.dem,tg=target(),diff=tg-cnt.r4;
+$('sm').innerHTML=[
+['Ngày đi làm',work+' ngày'],['Ngày R4',cnt.r4+' / '+tg],
+['Ngày nghỉ',cnt.nghi+' ngày'],['Công thường',n1(cong)+' công'],
+['Tăng ca sáng',n1(sH)+' giờ'],['Tăng ca tối',n1(tH)+' giờ'],
+['Công tăng ca',n1(otCong)+' công'],['Tổng công',n1(cong+otCong)+' công']
+].map(function(a){return '<div><small>'+a[0]+'</small><b>'+a[1]+'</b></div>';}).join('');
+var hint,c='var(--ok)';
+if(diff>0){hint='Còn '+diff+' ngày R4 chưa chọn.';c='var(--wn)';}
+else if(diff===0)hint='Đủ '+tg+' ngày R4.';
+else{hint='Đang dư '+(-diff)+' ngày R4 so với '+tg+' ngày chuẩn.';c='var(--wn)';}
+if(cnt.nghi>pl)hint+=' Có '+(cnt.nghi-pl)+' ngày nghỉ không lương.';
+$('hint').textContent=hint;$('hint').style.color=c;
+$('r4c').innerHTML='<div class="stp"><div style="display:block"><b style="font-size:15px;font-weight:500;min-width:0;text-align:left;display:block">Số ngày R4 của kỳ này</b><span class="note" style="margin:0">Kỳ này có '+weekRows()+' tuần nên mặc định '+weekRows()+' ngày R4. Bạn chỉnh được.</span></div><div><button id="r4m" aria-label="Giảm">&minus;</button><b>'+tg+'</b><button id="r4p" aria-label="Tăng">+</button></div></div>';
+$('pay').innerHTML='<h2>Lương tạm tính</h2>'
++'<div class="row"><span>Ngày công ('+work+' ngày)</span><b>'+fm(base)+'</b></div>'
++'<div class="row"><span>Phụ cấp ca đêm +30% ('+cnt.dem+' đêm)</span><b>'+fm(night)+'</b></div>'
++'<div class="row"><span>Làm ngày R4 x2 ('+rw+' ngày)</span><b>'+fm(rest)+'</b></div>'
++'<div class="row"><span>Nghỉ phép có lương ('+pl+' ngày)</span><b>'+fm(leave)+'</b></div>'
++'<div class="row"><span>Tăng ca x1,5 ('+n1(otH)+' giờ)</span><b>'+fm(ot)+'</b></div>'
++'<div class="row"><span>Tổng cộng</span><span class="tot">'+fm(total)+'</span></div>'
++'<div class="note">Số ngày theo ca: HC '+cnt.hc+', Ca 1 '+cnt.c1+', Ca 2 '+cnt.c2+', Đêm '+cnt.dem+'.</div>'
++'<div class="note">Cách tính: '+fm(MONTHLY)+' ÷ '+STD+' công = '+fm(DAY)+' mỗi công, '+fm(HOUR)+' mỗi giờ. Tăng ca nhân 1,5 (5 giờ ra 7,5 giờ). Ca đêm cộng thêm 30% trên 1 công. R4 không đi làm không tính tiền, đi làm thì nhân 2. Nghỉ không lương không tính tiền. Lương tính theo công thực tế.</div>';
+}
+function chips(cur){
+return '<div class="chips">'+ORD.map(function(k){
+var col=k==='c1'&&!multi?(draft.col||SH.c1.col):SH[k].col;
+return '<button class="chip'+(cur===k?' on':'')+'" data-sh="'+k+'" style="background:'+col+'">'+SH[k].f+'</button>';
+}).join('')+'</div>';
+}
+function panel(){
+var h='';
+if(multi){
+var n=Object.keys(ms).length;
+h='<div class="imp">Đã chọn '+n+' ngày</div>';
+h+='<div class="note" style="margin:4px 0 0">'+(n?'Chọn ca bên dưới rồi bấm Lưu.':'Bấm vào các ngày trên lịch cần đổi ca, ví dụ các ngày R4.')+'</div>';
+h+=chips(mshift);
+h+='<div class="acts"><button class="pri" data-act="msave">Lưu cho '+n+' ngày</button><button data-act="mclr">Bỏ chọn</button><button class="dg" data-act="mdel">Xóa ca</button></div>';
+}else{
+var o=dayObj(sel),has=!!data[sel],r=editing?draft:(data[sel]||{}),s=shOf(r);
+h='<div class="imp">'+WD[o.d.getDay()]+', '+o.d.getDate()+'/'+(o.d.getMonth()+1)+'/'+o.d.getFullYear();
+h+=editing?'<span class="st no">Chưa lưu</span>':'<span class="st ok">Đã lưu</span>';
+h+='</div>';
+if(!editing){
+h+='<div class="ln imp" style="margin-top:8px">'+SH[s].f+' ('+SH[s].t+')</div>';
+if(s==='dem'&&r.x!==false)h+='<div class="ln">Kéo dài đến 8h00: +2 giờ tăng ca sáng</div>';
+if(r.s>0)h+='<div class="ln">Tăng ca sáng: '+n1(r.s)+' giờ</div>';
+if(r.t>0)h+='<div class="ln">Tăng ca tối: '+n1(r.t)+' giờ</div>';
+if(r.w)h+='<div class="ln">Đi làm ngày nghỉ (x2)</div>';
+if(r.p)h+='<div class="ln">Nghỉ phép có lương</div>';
+h+='<div class="acts"><button class="pri" data-act="edit">Thay đổi</button><button class="dg" data-act="del">Xóa</button></div>';
+}else{
+h+=chips(s);
+h+='<div class="note" style="margin:0 0 6px">'+SH[s].f+': '+SH[s].t+(has?'':' (mặc định nếu chưa nhập)')+'</div>';
+if(s==='dem')h+='<label class="ck"><input type="checkbox" id="x"'+(r.x!==false?' checked':'')+'> Kéo dài đến 8h00 (+2 giờ tăng ca sáng)</label>';
+if(s==='r4')h+='<label class="ck"><input type="checkbox" id="w"'+(r.w?' checked':'')+'> Đi làm vào ngày nghỉ (tính x2)</label>';
+if(s==='nghi')h+='<label class="ck"><input type="checkbox" id="p"'+(r.p?' checked':'')+'> Nghỉ phép có lương (tính 1 công)</label>';
+h+='<div class="r"><div><label for="hs">Tăng ca sáng (giờ)</label><input type="number" inputmode="decimal" min="0" step="0.5" id="hs" value="'+(r.s||'')+'"></div><div><label for="ht">Tăng ca tối (giờ)</label><input type="number" inputmode="decimal" min="0" step="0.5" id="ht" value="'+(r.t||'')+'"></div></div>';
+h+='<div class="acts"><button class="pri savebtn" data-act="save">LƯU THAY ĐỔI</button>'+(has?'<button data-act="cancel">Hủy</button><button class="dg" data-act="del">Xóa</button>':'')+'</div>';
+}
+}
+if(msg)h+='<div id="err">'+msg+'</div>';
+$('ed').innerHTML=h;
+}
+function renderAll(){draw();calc();panel();}
+function selectDay(k){
+sel=k;msg='';
+if(data[k]){editing=false;draft={};}else{editing=true;draft={};}
+}
+function setShiftOn(n,v){
+n.sh=v;
+delete n.w;delete n.p;delete n.x;
+if(v==='c1'){if(C1P.indexOf(n.col)<0)n.col=rnd();}else delete n.col;
+if(v==='dem')n.x=true;
+return n;
+}
+function tidy(n){
+n.sh=n.sh||'hc';
+if(!(n.s>0))delete n.s;
+if(!(n.t>0))delete n.t;
+if(!n.w)delete n.w;
+if(!n.p)delete n.p;
+return n;
+}
+$('ed').onclick=function(e){
+var b=e.target.closest('[data-act],[data-sh]');
+if(!b)return;
+msg='';
+var v=b.getAttribute('data-sh'),a=b.getAttribute('data-act');
+if(v){
+if(multi){mshift=v;panel();}
+else{setShiftOn(draft,v);draw();panel();}
+return;
+}
+if(a==='edit'){editing=true;draft=Object.assign({},data[sel]);renderAll();}
+else if(a==='cancel'){editing=false;draft={};renderAll();}
+else if(a==='save'){
+data[sel]=tidy(Object.assign({},draft));
+editing=false;draft={};
+renderAll();persist();
+}
+else if(a==='del'){
+delete data[sel];editing=true;draft={};
+renderAll();persist();
+}
+else if(a==='msave'){
+var ks=Object.keys(ms);
+if(!ks.length){msg='Chọn ít nhất một ngày trên lịch.';panel();return;}
+if(!mshift){msg='Chọn một ca trước khi lưu.';panel();return;}
+ks.forEach(function(k){data[k]=tidy(setShiftOn(Object.assign({},data[k]||{}),mshift));});
+ms={};renderAll();persist();
+}
+else if(a==='mdel'){
+var kk=Object.keys(ms);
+if(!kk.length){msg='Chọn ít nhất một ngày trên lịch.';panel();return;}
+kk.forEach(function(k){delete data[k];});
+ms={};renderAll();persist();
+}
+else if(a==='mclr'){ms={};draw();panel();}
+};
+$('ed').oninput=function(e){
+var id=e.target.id;
+if(id==='hs'||id==='ht'){
+var x=Math.max(0,parseFloat(e.target.value)||0);
+draft[id==='hs'?'s':'t']=x;
+draw();
+}
+};
+$('ed').onchange=function(e){
+var id=e.target.id;
+if(id==='x'||id==='w'||id==='p'){draft[id]=e.target.checked;draw();}
+};
+$('r4c').onclick=function(e){
+var b=e.target.closest('button');
+if(!b)return;
+var t=target();
+if(b.id==='r4m')t=Math.max(0,t-1);
+else if(b.id==='r4p')t=Math.min(days.length,t+1);
+else return;
+r4t=t;calc();persist();
+};
+$('g').onclick=function(e){
+var c=e.target.closest('[data-k]');
+if(!c)return;
+var k=c.getAttribute('data-k');
+if(multi){if(ms[k])delete ms[k];else ms[k]=true;msg='';draw();panel();}
+else{selectDay(k);draw();panel();}
+};
+$('mb').onclick=function(){
+multi=!multi;ms={};mshift=null;msg='';
+$('mb').textContent=multi?'Xong chọn nhiều':'Chọn nhiều ngày';
+$('mb').className=multi?'on':'';
+$('tbn').textContent=multi?'Đang chọn nhiều ngày':'Ngày chưa nhập tính là Hành chính';
+if(!multi)selectDay(sel);
+renderAll();
+};
+function legend(){
+var h=ORD.map(function(k){return '<span><i style="background:'+SH[k].col+(k==='r4'?';border:1px dashed #0F6E56':'')+'"></i>'+SH[k].f+'</span>';}).join('');
+h+='<span><i style="background:#CFE6FA"></i>Tăng ca sáng</span><span><i style="background:#F9D6E4"></i>Tăng ca tối</span>';
+$('lg').innerHTML=h;
+}
+function load(){
+  tok++;
+  var t=tok;
+  build();
+  var lv=localLoad();
+  apply(lv);
+  selectDay(sel);
+  renderAll();
+  setSt(lv ? 'Đang dùng bản lưu trên máy…' : 'Đang tải…');
+  var loadSaveSeq=saveSeq;
+  var localTs=(lv&&lv.ts)||0;
+  getDb().then(function(d){
+    if(t!==tok)return;
+    if(!d){
+      setSt(lv ? 'Đang dùng dữ liệu lưu trên máy này' : 'Chưa kết nối bộ nhớ chung');
+      return;
+    }
+    return d.doc(key()).get().then(function(snap){
+      if(t!==tok)return;
+      var v=snap.exists?snap.data():null;
+      var dbTs=(v&&v.ts)||0;
+      if(saveSeq!==loadSaveSeq)return;
+      if(v && dbTs>=localTs){
+        apply(v);
+        localSave(v);
+        selectDay(sel);
+        renderAll();
+        setSt('Đã đồng bộ dữ liệu mới nhất');
+      }else{
+        setSt(lv ? 'Đang dùng dữ liệu mới nhất đã lưu trên máy' : 'Chưa có dữ liệu bộ nhớ chung');
+      }
+    });
+  }).catch(function(){
+    if(t===tok)setSt(lv ? 'Đang dùng dữ liệu lưu trên máy (DB tạm thời không kết nối)' : 'Không tải được từ bộ nhớ chung');
+  });
+}
+$('pv').onclick=function(){cm--;if(cm<0){cm=11;cy--;}load();};
+$('nx').onclick=function(){cm++;if(cm>11){cm=0;cy++;}load();};
+legend();
+load();
+</script>
+</body>
+</html>
